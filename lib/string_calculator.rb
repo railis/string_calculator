@@ -69,10 +69,7 @@ class Evaluator
   end
 
   def evaluate
-    counter = 0
-    until Expression.new(exp).is_simple_expression? or counter > 5
-      puts exp
-      puts "changing"
+    until Expression.new(exp).is_simple_expression?
       simple_expressions = Expression.new(exp).get_simple_expressions
       simple_expressions.each do |simple_expression|
         exp.gsub!(simple_expression, SimpleExpressionEvaluator.new(simple_expression).evaluate.to_s)
@@ -80,8 +77,6 @@ class Evaluator
       if Expression.new(exp).with_incorrect_parity?
         raise "Incorrect expression" and return
       end
-      puts exp
-      counter += 1
     end
     SimpleExpressionEvaluator.new(exp).evaluate
   end
