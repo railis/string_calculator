@@ -3,12 +3,6 @@ require File.expand_path("../../lib/string_calculator", __FILE__)
 describe StringCalculator do
   subject { described_class.new("string") }
 
-  describe "#string" do
-    it "does sth" do
-      expect(subject.string).to eq("dupa")
-    end
-  end
-
   context "when expression is invalid" do
     context "when not closed by parentheses" do
       let(:exp) { "1 + 2" }
@@ -82,7 +76,15 @@ describe StringCalculator do
       end
 
       context do
-        let(:exp) { "(1 + ((2 + 1) + (4 - (9 - 2))" }
+        let(:exp) { "((5 - 7) - (1 + 2))" }
+
+        it "returns calculated value" do
+          expect(described_class.new(exp).calculate).to eq(-5)
+        end
+      end
+
+      context do
+        let(:exp) { "(1 + ((2 + 1) + (4 - (9 - 2))))" }
 
         it "returns calculated value" do
           expect(described_class.new(exp).calculate).to eq(1)
